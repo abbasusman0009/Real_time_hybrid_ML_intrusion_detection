@@ -1,0 +1,47 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs (runtime logs, not to be committed)
+logs/*.log
+logs/system.log
+logs/dashboard.log
+logs/detector_service.log
+logs/feature_extractor.log
+logs/packet_sniffer.log
+logs/prevention.log
+logs/test.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Data files that might be large
+data/*.csv
+!data/nsl_kdd.csv  # Keep the original dataset
+
+# Model files (can be large)
+models/*.pkl
+models/*.joblib
+
+# Node modules if any
+node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.production

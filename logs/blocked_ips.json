@@ -1,0 +1,68 @@
+{
+  "192.168.1.100": {
+    "reason": "Test block",
+    "blocked_at": "2026-01-07 22:32:12",
+    "expires_at": "2026-01-07 23:32:12",
+    "duration": 3600
+  },
+  "35.186.247.105": {
+    "reason": "Suspicious activity detected",
+    "blocked_at": "2026-01-07 22:32:12",
+    "expires_at": "2026-01-07 23:32:12",
+    "duration": 3600
+  },
+  "172.22.177.9": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:34:10",
+    "expires_at": "2026-01-07 23:34:10",
+    "duration": 3600
+  },
+  "185.125.190.57": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:34:10",
+    "expires_at": "2026-01-07 23:34:10",
+    "duration": 3600
+  },
+  "34.49.39.67": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:34:55",
+    "expires_at": "2026-01-07 23:34:55",
+    "duration": 3600
+  },
+  "172.22.176.1": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:35:07",
+    "expires_at": "2026-01-07 23:35:07",
+    "duration": 3600
+  },
+  "140.82.121.3": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:39:05",
+    "expires_at": "2026-01-07 23:39:05",
+    "duration": 3600
+  },
+  "140.82.113.21": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:39:33",
+    "expires_at": "2026-01-07 23:39:33",
+    "duration": 3600
+  },
+  "3.88.247.34": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:39:42",
+    "expires_at": "2026-01-07 23:39:42",
+    "duration": 3600
+  },
+  "54.90.36.212": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:39:43",
+    "expires_at": "2026-01-07 23:39:43",
+    "duration": 3600
+  },
+  "3.95.129.122": {
+    "reason": "Anomaly Detected",
+    "blocked_at": "2026-01-07 22:39:46",
+    "expires_at": "2026-01-07 23:39:46",
+    "duration": 3600
+  }
+}

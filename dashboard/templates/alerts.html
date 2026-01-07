@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}RT-IDPS - Intrusion Alerts{% endblock %}
+
+{% block content %}
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto">
+<div class="max-w-[1400px] mx-auto p-6 flex flex-col gap-6">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Intrusion Alerts</h2>
+<p class="text-slate-500 dark:text-[#9da6b9] text-base font-normal">Real-time monitoring of network anomalies and detected threats.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<span class="text-xs font-bold text-emerald-500 uppercase tracking-wide">Live Feed Active</span>
+</div>
+<button onclick="exportAlerts()" class="flex items-center justify-center h-10 px-4 rounded-lg bg-slate-200 dark:bg-surface-dark hover:bg-slate-300 dark:hover:bg-border-dark text-slate-700 dark:text-white text-sm font-bold transition-colors cursor-pointer">
+<span class="material-symbols-outlined mr-2 !text-[20px]">file_download</span>
+                                Export CSV
+                            </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col gap-1 rounded-xl p-6 border border-slate-200 dark:border-border-dark bg-white dark:bg-[#111318] shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium">Total Intrusions (24h)</p>
+<span class="material-symbols-outlined text-primary !text-[20px]">travel_explore</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">{{ stats.threats_detected }}</p>
+<p class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined !text-[16px]">arrow_upward</span> {{ stats.threats_change }}%
+                                </p>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-6 border border-red-200 dark:border-red-900/30 bg-red-50 dark:bg-red-950/10 shadow-sm relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-24 bg-red-500/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+<div class="flex justify-between items-start relative z-10">
+<p class="text-red-700 dark:text-red-300 text-sm font-medium">High Severity Alerts</p>
+<span class="material-symbols-outlined text-red-500 !text-[20px]">warning</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2 relative z-10">
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">{{ stats.high_severity_alerts or 0 }}</p>
+<p class="text-red-600 dark:text-red-400 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined !text-[16px]">arrow_upward</span> {{ stats.high_severity_change or 0 }}%
+                                </p>
+</div>
+</div>
+<div class="flex flex-col gap-1 rounded-xl p-6 border border-slate-200 dark:border-border-dark bg-white dark:bg-[#111318] shadow-sm">
+<div class="flex justify-between items-start">
+<p class="text-slate-500 dark:text-[#9da6b9] text-sm font-medium">Active Blocks</p>
+<span class="material-symbols-outlined text-emerald-500 !text-[20px]">gpp_good</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<p class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight">890</p>
+<p class="text-emerald-500 text-sm font-bold flex items-center">
+<span class="material-symbols-outlined !text-[16px]">arrow_upward</span> 8%
+                                </p>
+</div>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center bg-white dark:bg-[#111318] p-4 rounded-xl border border-slate-200 dark:border-border-dark shadow-sm">
+<!-- Search -->
+<div class="w-full lg:w-1/3">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 border-none rounded-lg leading-5 bg-slate-100 dark:bg-surface-dark text-slate-900 dark:text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary sm:text-sm transition-all" placeholder="Search by IP, Attack Type, or Event ID..." type="text"/>
+</div>
+</div>
+<!-- Chips -->
+<div class="flex flex-wrap gap-2 w-full lg:w-auto justify-start lg:justify-end">
+<button class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#2d3b55] transition-colors">
+<span>Severity: All</span>
+<span class="material-symbols-outlined !text-[18px]">expand_more</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#2d3b55] transition-colors">
+<span>Method: All</span>
+<span class="material-symbols-outlined !text-[18px]">expand_more</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-border-dark bg-white dark:bg-surface-dark text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#2d3b55] transition-colors">
+<span>Time: Last 24h</span>
+<span class="material-symbols-outlined !text-[18px]">calendar_today</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 text-sm font-medium hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined !text-[18px]">filter_list</span>
+<span>Advanced</span>
+</button>
+</div>
+</div>
+<!-- Detailed Table -->
+<div class="rounded-xl border border-slate-200 dark:border-border-dark bg-white dark:bg-[#111318] shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-slate-200 dark:divide-border-dark">
+<thead class="bg-slate-50 dark:bg-surface-dark">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Severity</th>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Source IP</th>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Target</th>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Attack Type</th>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Detection Method</th>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Time</th>
+<th class="px-6 py-4 text-left text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" scope="col">Action</th>
+<th class="relative px-6 py-4" scope="col"><span class="sr-only">Details</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-border-dark bg-white dark:bg-[#111318]">
+{% for alert in alerts %}
+<tr class="hover:bg-slate-50 dark:hover:bg-surface-dark/50 transition-colors group cursor-pointer {% if alert.severity == 'Critical' %}border-l-2 border-l-red-500{% endif %}">
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium
+{% if alert.severity == 'Critical' %}bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/30{% elif alert.severity == 'High' %}bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-500/30{% else %}bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-600{% endif %}">
+<span class="w-1.5 h-1.5 rounded-full
+{% if alert.severity == 'Critical' %}bg-red-500{% elif alert.severity == 'High' %}bg-orange-500{% else %}bg-slate-400{% endif %}"></span>
+{{ alert.severity or 'Medium' }}
+</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-white font-mono">{{ alert.source_ip or alert.src_ip or 'Unknown' }}</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-mono">{{ alert.target or alert.dest_ip or 'Unknown' }}</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+{% if alert.attack_type and 'SQL' in alert.attack_type %}
+<span class="material-symbols-outlined text-red-500 !text-[20px]">database</span>
+{% elif alert.attack_type and 'Port' in alert.attack_type %}
+<span class="material-symbols-outlined text-orange-500 !text-[20px]">radar</span>
+{% elif alert.attack_type and 'DDoS' in alert.attack_type %}
+<span class="material-symbols-outlined text-red-500 !text-[20px]">cloud_off</span>
+{% elif alert.attack_type and 'XSS' in alert.attack_type %}
+<span class="material-symbols-outlined text-orange-500 !text-[20px]">code</span>
+{% else %}
+<span class="material-symbols-outlined text-slate-500 !text-[20px]">warning</span>
+{% endif %}
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">{{ alert.attack_type or alert.type or 'Unknown Attack' }}</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium
+{% if alert.get('detection_method') == 'Random Forest' or 'Random' in (alert.get('detection_method', '')|string) %}bg-primary/10 text-primary border border-primary/20{% else %}bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20{% endif %}">
+{{ alert.get('detection_method') or 'ML Detection' }}
+</span>
+{% if alert.confidence %}
+<span class="ml-1 text-xs text-slate-400 dark:text-slate-500">{{ alert.confidence }} Conf</span>
+{% endif %}
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400 font-mono">{{ alert.timestamp.split(' ')[1] if ' ' in alert.timestamp else alert.timestamp if alert.timestamp else 'Unknown' }}</td>
+<td class="px-6 py-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium
+{% if alert.action == 'Blocked' %}bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700{% elif alert.action == 'Flagged' %}bg-yellow-100 dark:bg-yellow-500/10 text-yellow-700 dark:text-yellow-500 border border-yellow-200 dark:border-yellow-500/20{% else %}bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-500 border border-emerald-200 dark:border-emerald-500/20{% endif %}">
+<span class="material-symbols-outlined !text-[14px]">
+{% if alert.action == 'Blocked' %}block{% elif alert.action == 'Flagged' %}flag{% else %}visibility{% endif %}
+</span>
+{{ alert.action or 'Monitored' }}
+</span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<span class="material-symbols-outlined text-slate-400 hover:text-primary cursor-pointer">chevron_right</span>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-border-dark flex items-center justify-between bg-slate-50 dark:bg-surface-dark/50">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                                Showing <span class="font-medium text-slate-900 dark:text-white">1</span> to <span class="font-medium text-slate-900 dark:text-white">{{ alerts|length }}</span> of <span class="font-medium text-slate-900 dark:text-white">{{ alerts|length }}</span> results
+                            </p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-slate-300 dark:border-border-dark text-slate-500 dark:text-slate-400 text-sm hover:bg-slate-100 dark:hover:bg-surface-dark disabled:opacity-50">Previous</button>
+<button class="px-3 py-1 rounded border border-slate-300 dark:border-border-dark text-slate-500 dark:text-slate-400 text-sm hover:bg-slate-100 dark:hover:bg-surface-dark">Next</button>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/**
+ * Alerts page specific JavaScript functions
+ */
+
+// Export alerts to CSV
+function exportAlerts() {
+    // Redirect to the export endpoint
+    window.location.href = '/api/alerts/export';
+}
+
+// Search and filter functionality (placeholder)
+function searchAlerts(query) {
+    // TODO: Implement search functionality
+    console.log('Searching alerts:', query);
+}
+
+function filterAlerts(severity, method, time) {
+    // TODO: Implement filter functionality
+    console.log('Filtering alerts:', {severity, method, time});
+}
+</script>
+{% endblock %}

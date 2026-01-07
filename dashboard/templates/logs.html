@@ -1,0 +1,599 @@
+{% extends "base.html" %}
+
+{% block title %}RT-IDPS - Event Logs{% endblock %}
+
+{% block content %}
+<div class="flex h-screen w-full">
+    <!-- Main Content -->
+    <main class="flex h-full flex-1 flex-col overflow-hidden bg-background-light dark:bg-background-dark transition-all">
+        <!-- Top Header -->
+        <header class="flex h-auto min-h-[80px] shrink-0 items-center justify-between gap-4 border-b border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark px-6 py-4 lg:px-8">
+            <div class="flex flex-col gap-1">
+                <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">System Event Logs</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Historical analysis of network intrusions and security events.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="hidden items-center gap-2 text-sm text-slate-500 dark:text-slate-400 lg:flex mr-4">
+                    <span class="material-symbols-outlined text-[18px]">database</span>
+                    <span>Total Records: <span class="font-mono font-medium text-slate-900 dark:text-white">{{ logs|length }}</span></span>
+                </div>
+                <button id="export-csv-btn" class="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-blue-700 shadow-lg shadow-blue-900/20">
+                    <span class="material-symbols-outlined text-[20px]">download</span>
+                    <span>Export to CSV</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Scrollable Content Area -->
+        <div class="flex-1 overflow-y-auto p-6 lg:p-8">
+            <div class="mx-auto flex max-w-7xl flex-col gap-6">
+                <!-- Filters Section -->
+                <div class="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-border-dark dark:bg-card-dark">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 mr-2">
+                            <span class="material-symbols-outlined">filter_list</span>
+                            Filters:
+                        </div>
+                        <!-- Date Range Filter -->
+                        <div class="relative group">
+                            <button id="date-filter-btn" class="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-border-dark dark:bg-background-dark dark:text-slate-300 dark:hover:bg-border-dark transition-colors">
+                                <span class="material-symbols-outlined text-[18px] text-slate-400">calendar_today</span>
+                                <span>Last 24 Hours</span>
+                                <span class="material-symbols-outlined text-[18px] text-slate-400">expand_more</span>
+                            </button>
+                        </div>
+                        <!-- Severity Filter -->
+                        <div class="relative group">
+                            <button id="severity-filter-btn" class="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-border-dark dark:bg-background-dark dark:text-slate-300 dark:hover:bg-border-dark transition-colors">
+                                <span class="material-symbols-outlined text-[18px] text-slate-400">warning</span>
+                                <span>Severity: All</span>
+                                <span class="material-symbols-outlined text-[18px] text-slate-400">expand_more</span>
+                            </button>
+                        </div>
+                        <!-- Attack Type Filter -->
+                        <div class="relative group">
+                            <button id="type-filter-btn" class="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:border-border-dark dark:bg-background-dark dark:text-slate-300 dark:hover:bg-border-dark transition-colors">
+                                <span class="material-symbols-outlined text-[18px] text-slate-400">bug_report</span>
+                                <span>Type: All</span>
+                                <span class="material-symbols-outlined text-[18px] text-slate-400">expand_more</span>
+                            </button>
+                        </div>
+                        <div class="h-6 w-px bg-slate-200 dark:bg-border-dark mx-1"></div>
+                        <button id="clear-filters-btn" class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-blue-400 transition-colors">
+                            Clear Filters
+                        </button>
+                    </div>
+                    <!-- Search -->
+                    <div class="relative w-full md:w-64">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                            <span class="material-symbols-outlined text-[20px]">search</span>
+                        </span>
+                        <input id="search-input" class="h-9 w-full rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm text-slate-900 outline-none focus:border-primary focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-white dark:placeholder-slate-500" placeholder="Search IP or Event ID..." type="text"/>
+                    </div>
+                </div>
+
+                <!-- Table Section -->
+                <div class="flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-border-dark dark:bg-card-dark">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="border-b border-slate-200 bg-slate-50 dark:border-border-dark dark:bg-table-header">
+                                <tr>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Timestamp</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Source IP</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Destination IP</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Attack Type</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Protocol</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Status</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200">Severity</th>
+                                    <th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-200 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-tbody" class="divide-y divide-slate-200 dark:divide-border-dark">
+                                {% for log in logs %}
+                                <tr class="group transition-colors hover:bg-slate-50 dark:hover:bg-background-dark/50">
+                                    <td class="whitespace-nowrap px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{{ log.timestamp }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-mono text-slate-900 dark:text-slate-300">{{ log.source_ip or log.src_ip or 'Unknown' }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 font-mono text-slate-500 dark:text-slate-400">{{ log.dest_ip or log.dst_ip or 'Unknown' }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4 text-slate-900 dark:text-white font-medium">{{ log.attack_type or 'Unknown' }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        <span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 dark:bg-background-dark dark:text-slate-400 border border-slate-200 dark:border-border-dark">{{ log.protocol or 'Unknown' }}</span>
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {% if log.status == 'Blocked' %}
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700 dark:bg-red-500/10 dark:text-red-400 ring-1 ring-inset ring-red-600/10 dark:ring-red-400/20">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-red-600 dark:bg-red-400"></span>
+                                            {{ log.status }}
+                                        </span>
+                                        {% elif log.status == 'Detected' %}
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-yellow-50 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20 dark:ring-yellow-400/20">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-yellow-600 dark:bg-yellow-400"></span>
+                                            {{ log.status }}
+                                        </span>
+                                        {% elif log.status == 'Mitigated' %}
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400 ring-1 ring-inset ring-green-600/20 dark:ring-green-400/20">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400"></span>
+                                            {{ log.status }}
+                                        </span>
+                                        {% else %}
+                                        <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 ring-1 ring-inset ring-blue-600/20 dark:ring-blue-400/20">
+                                            <span class="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                                            {{ log.status or 'Unknown' }}
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        {% if log.severity == 'Critical' %}
+                                        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 dark:bg-red-900/20 dark:text-red-400 dark:ring-red-900/30">
+                                            {{ log.severity }}
+                                        </span>
+                                        {% elif log.severity == 'High' %}
+                                        <span class="inline-flex items-center rounded-md bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10 dark:bg-orange-900/20 dark:text-orange-400 dark:ring-orange-900/30">
+                                            {{ log.severity }}
+                                        </span>
+                                        {% elif log.severity == 'Medium' %}
+                                        <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-900/20 dark:text-yellow-400 dark:ring-yellow-900/30">
+                                            {{ log.severity }}
+                                        </span>
+                                        {% elif log.severity == 'Low' %}
+                                        <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-900/20 dark:text-blue-400 dark:ring-blue-900/30">
+                                            {{ log.severity }}
+                                        </span>
+                                        {% else %}
+                                        <span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-700/30">
+                                            {{ log.severity or 'Info' }}
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4 text-right">
+                                        <button class="text-sm font-semibold text-primary hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">View Details</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between border-t border-slate-200 bg-white px-6 py-4 dark:border-border-dark dark:bg-card-dark">
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                            <div>
+                                <p id="pagination-info" class="text-sm text-slate-700 dark:text-slate-400">
+                                    Showing
+                                    <span class="font-medium text-slate-900 dark:text-white">1</span>
+                                    to
+                                    <span class="font-medium text-slate-900 dark:text-white">{{ logs|length }}</span>
+                                    of
+                                    <span class="font-medium text-slate-900 dark:text-white">{{ logs|length }}</span>
+                                    results
+                                </p>
+                            </div>
+                            <div>
+                                <nav id="pagination-nav" aria-label="Pagination" class="isolate inline-flex -space-x-px rounded-md shadow-sm">
+                                    <a class="relative inline-flex items-center rounded-l-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark" href="#">
+                                        <span class="sr-only">Previous</span>
+                                        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                                    </a>
+                                    <a aria-current="page" class="relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#">1</a>
+                                    <a class="relative inline-flex items-center rounded-r-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark" href="#">
+                                        <span class="sr-only">Next</span>
+                                        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Hidden div to store logs data -->
+<div id="logs-data" style="display: none;">{{ logs|tojson|safe }}</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/**
+ * Logs page specific JavaScript functions
+ */
+
+// Global variables for filtering and pagination
+let currentPage = 1;
+let itemsPerPage = 10;
+let allLogs = [];
+let filteredLogs = [];
+let searchQuery = '';
+let dateFilter = 'all';
+let severityFilter = 'all';
+let typeFilter = 'all';
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Get initial data from hidden div
+    try {
+        const logsDataElement = document.getElementById('logs-data');
+        if (logsDataElement && logsDataElement.textContent) {
+            allLogs = JSON.parse(logsDataElement.textContent);
+        }
+    } catch (e) {
+        console.error('Error parsing logs data:', e);
+        allLogs = [];
+    }
+    
+    filteredLogs = [...allLogs];
+    renderTable();
+    updatePagination();
+
+    // Set up event listeners
+    setupEventListeners();
+});
+
+// Setup event listeners
+function setupEventListeners() {
+    // Search input
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            searchQuery = e.target.value.toLowerCase();
+            applyFilters();
+        });
+    }
+
+    // Date filter
+    const dateButton = document.getElementById('date-filter-btn');
+    if (dateButton) {
+        dateButton.addEventListener('click', function() {
+            dateFilter = dateFilter === 'all' ? '24h' : dateFilter === '24h' ? '7d' : 'all';
+            updateDateFilterDisplay();
+            applyFilters();
+        });
+    }
+
+    // Severity filter
+    const severityButton = document.getElementById('severity-filter-btn');
+    if (severityButton) {
+        severityButton.addEventListener('click', function() {
+            severityFilter = severityFilter === 'all' ? 'Critical' : 
+                           severityFilter === 'Critical' ? 'High' : 
+                           severityFilter === 'High' ? 'Medium' : 
+                           severityFilter === 'Medium' ? 'Low' : 'all';
+            updateSeverityFilterDisplay();
+            applyFilters();
+        });
+    }
+
+    // Type filter
+    const typeButton = document.getElementById('type-filter-btn');
+    if (typeButton) {
+        typeButton.addEventListener('click', function() {
+            typeFilter = typeFilter === 'all' ? 'DDoS' : 
+                        typeFilter === 'DDoS' ? 'SQL Injection' : 
+                        typeFilter === 'SQL Injection' ? 'XSS' : 'all';
+            updateTypeFilterDisplay();
+            applyFilters();
+        });
+    }
+
+    // Clear filters
+    const clearButton = document.getElementById('clear-filters-btn');
+    if (clearButton) {
+        clearButton.addEventListener('click', function() {
+            searchQuery = '';
+            dateFilter = 'all';
+            severityFilter = 'all';
+            typeFilter = 'all';
+            
+            // Clear search input
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            
+            updateFilterDisplays();
+            applyFilters();
+        });
+    }
+
+    // Export button
+    const exportButton = document.getElementById('export-csv-btn');
+    if (exportButton) {
+        exportButton.addEventListener('click', exportToCSV);
+    }
+}
+
+// Update filter display functions
+function updateDateFilterDisplay() {
+    const dateButton = document.getElementById('date-filter-btn');
+    if (dateButton) {
+        const span = dateButton.querySelector('span:nth-child(2)');
+        if (span) {
+            span.textContent = dateFilter === 'all' ? 'All Time' : 
+                              dateFilter === '24h' ? 'Last 24 Hours' : 'Last 7 Days';
+        }
+    }
+}
+
+function updateSeverityFilterDisplay() {
+    const severityButton = document.getElementById('severity-filter-btn');
+    if (severityButton) {
+        const span = severityButton.querySelector('span:nth-child(2)');
+        if (span) {
+            span.textContent = `Severity: ${severityFilter === 'all' ? 'All' : severityFilter}`;
+        }
+    }
+}
+
+function updateTypeFilterDisplay() {
+    const typeButton = document.getElementById('type-filter-btn');
+    if (typeButton) {
+        const span = typeButton.querySelector('span:nth-child(2)');
+        if (span) {
+            span.textContent = `Type: ${typeFilter === 'all' ? 'All' : typeFilter}`;
+        }
+    }
+}
+
+function updateFilterDisplays() {
+    updateDateFilterDisplay();
+    updateSeverityFilterDisplay();
+    updateTypeFilterDisplay();
+}
+
+// Apply filters
+function applyFilters() {
+    filteredLogs = allLogs.filter(log => {
+        // Search filter
+        const sourceIp = log.source_ip || log.src_ip || '';
+        const destIp = log.dest_ip || log.dst_ip || '';
+        const attackType = log.attack_type || '';
+        const timestamp = log.timestamp || '';
+        
+        const matchesSearch = !searchQuery ||
+            sourceIp.toLowerCase().includes(searchQuery) ||
+            destIp.toLowerCase().includes(searchQuery) ||
+            attackType.toLowerCase().includes(searchQuery) ||
+            timestamp.toLowerCase().includes(searchQuery);
+
+        // Date filter
+        const matchesDate = dateFilter === 'all' ||
+            (dateFilter === '24h' && isWithinLastHours(log.timestamp, 24)) ||
+            (dateFilter === '7d' && isWithinLastHours(log.timestamp, 168));
+
+        // Severity filter
+        const matchesSeverity = severityFilter === 'all' || log.severity === severityFilter;
+
+        // Type filter
+        const matchesType = typeFilter === 'all' || 
+            (log.attack_type && log.attack_type.toLowerCase().includes(typeFilter.toLowerCase()));
+
+        return matchesSearch && matchesDate && matchesSeverity && matchesType;
+    });
+
+    currentPage = 1;
+    renderTable();
+    updatePagination();
+}
+
+// Helper function to check if timestamp is within last N hours
+function isWithinLastHours(timestamp, hours) {
+    try {
+        const logDate = new Date(timestamp);
+        const now = new Date();
+        const hoursAgo = new Date(now.getTime() - (hours * 60 * 60 * 1000));
+        return logDate >= hoursAgo;
+    } catch (e) {
+        return true; // If date parsing fails, include the item
+    }
+}
+
+// Render table
+function renderTable() {
+    const tbody = document.getElementById('logs-tbody');
+    if (!tbody) return;
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = filteredLogs.slice(startIndex, endIndex);
+
+    if (pageData.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="py-8 px-4 text-center text-slate-500 dark:text-slate-400">
+                    No logs found
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = pageData.map(log => `
+        <tr class="group transition-colors hover:bg-slate-50 dark:hover:bg-background-dark/50">
+            <td class="whitespace-nowrap px-6 py-4 font-mono text-slate-500 dark:text-slate-400">${log.timestamp || 'Unknown'}</td>
+            <td class="whitespace-nowrap px-6 py-4 font-mono text-slate-900 dark:text-slate-300">${log.source_ip || log.src_ip || 'Unknown'}</td>
+            <td class="whitespace-nowrap px-6 py-4 font-mono text-slate-500 dark:text-slate-400">${log.dest_ip || log.dst_ip || 'Unknown'}</td>
+            <td class="whitespace-nowrap px-6 py-4 text-slate-900 dark:text-white font-medium">${log.attack_type || 'Unknown'}</td>
+            <td class="whitespace-nowrap px-6 py-4">
+                <span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 dark:bg-background-dark dark:text-slate-400 border border-slate-200 dark:border-border-dark">${log.protocol || 'Unknown'}</span>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+                ${getStatusBadge(log.status)}
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+                ${getSeverityBadge(log.severity)}
+            </td>
+            <td class="whitespace-nowrap px-6 py-4 text-right">
+                <button class="text-sm font-semibold text-primary hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">View Details</button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Get status badge HTML
+function getStatusBadge(status) {
+    if (status === 'Blocked') {
+        return `<span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700 dark:bg-red-500/10 dark:text-red-400 ring-1 ring-inset ring-red-600/10 dark:ring-red-400/20">
+            <span class="h-1.5 w-1.5 rounded-full bg-red-600 dark:bg-red-400"></span>
+            ${status}
+        </span>`;
+    } else if (status === 'Detected') {
+        return `<span class="inline-flex items-center gap-1.5 rounded-full bg-yellow-50 px-2.5 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-500/10 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/20 dark:ring-yellow-400/20">
+            <span class="h-1.5 w-1.5 rounded-full bg-yellow-600 dark:bg-yellow-400"></span>
+            ${status}
+        </span>`;
+    } else if (status === 'Mitigated') {
+        return `<span class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400 ring-1 ring-inset ring-green-600/20 dark:ring-green-400/20">
+            <span class="h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400"></span>
+            ${status}
+        </span>`;
+    } else {
+        return `<span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 ring-1 ring-inset ring-blue-600/20 dark:ring-blue-400/20">
+            <span class="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+            ${status || 'Unknown'}
+        </span>`;
+    }
+}
+
+// Get severity badge HTML
+function getSeverityBadge(severity) {
+    if (severity === 'Critical') {
+        return `<span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 dark:bg-red-900/20 dark:text-red-400 dark:ring-red-900/30">
+            ${severity}
+        </span>`;
+    } else if (severity === 'High') {
+        return `<span class="inline-flex items-center rounded-md bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700 ring-1 ring-inset ring-orange-600/10 dark:bg-orange-900/20 dark:text-orange-400 dark:ring-orange-900/30">
+            ${severity}
+        </span>`;
+    } else if (severity === 'Medium') {
+        return `<span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 dark:bg-yellow-900/20 dark:text-yellow-400 dark:ring-yellow-900/30">
+            ${severity}
+        </span>`;
+    } else if (severity === 'Low') {
+        return `<span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 dark:bg-blue-900/20 dark:text-blue-400 dark:ring-blue-900/30">
+            ${severity}
+        </span>`;
+    } else {
+        return `<span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600 ring-1 ring-inset ring-slate-500/10 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-700/30">
+            ${severity || 'Info'}
+        </span>`;
+    }
+}
+
+// Update pagination
+function updatePagination() {
+    const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+    const paginationInfo = document.getElementById('pagination-info');
+
+    if (paginationInfo) {
+        const startItem = filteredLogs.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+        const endItem = Math.min(currentPage * itemsPerPage, filteredLogs.length);
+
+        paginationInfo.innerHTML = `
+            Showing
+            <span class="font-medium text-slate-900 dark:text-white">${startItem}</span>
+            to
+            <span class="font-medium text-slate-900 dark:text-white">${endItem}</span>
+            of
+            <span class="font-medium text-slate-900 dark:text-white">${filteredLogs.length}</span>
+            results
+        `;
+    }
+
+    // Update pagination buttons
+    updatePaginationButtons(totalPages);
+}
+
+function updatePaginationButtons(totalPages) {
+    const paginationNav = document.getElementById('pagination-nav');
+    if (!paginationNav) return;
+
+    let buttonsHtml = '';
+
+    // Previous button
+    buttonsHtml += `<a class="relative inline-flex items-center rounded-l-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}" href="#" onclick="event.preventDefault(); changePage(${currentPage - 1})">
+        <span class="sr-only">Previous</span>
+        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+    </a>`;
+
+    // Page numbers
+    for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+        if (i === currentPage) {
+            buttonsHtml += `<a aria-current="page" class="relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#">${i}</a>`;
+        } else {
+            buttonsHtml += `<a class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:text-slate-300 dark:ring-border-dark dark:hover:bg-background-dark" href="#" onclick="event.preventDefault(); changePage(${i})">${i}</a>`;
+        }
+    }
+
+    // Next button
+    buttonsHtml += `<a class="relative inline-flex items-center rounded-r-md px-2 py-2 text-slate-400 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}" href="#" onclick="event.preventDefault(); changePage(${currentPage + 1})">
+        <span class="sr-only">Next</span>
+        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+    </a>`;
+
+    paginationNav.innerHTML = buttonsHtml;
+}
+
+function changePage(page) {
+    const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+    if (page < 1 || page > totalPages) return;
+
+    currentPage = page;
+    renderTable();
+    updatePagination();
+}
+
+// Export to CSV
+function exportToCSV() {
+    // Create CSV content
+    let csvContent = 'Timestamp,Source IP,Destination IP,Attack Type,Protocol,Status,Severity\n';
+
+    // Add data
+    filteredLogs.forEach(log => {
+        const sourceIp = log.source_ip || log.src_ip || '';
+        const destIp = log.dest_ip || log.dst_ip || '';
+        csvContent += `"${log.timestamp || ''}","${sourceIp}","${destIp}","${log.attack_type || ''}","${log.protocol || ''}","${log.status || ''}","${log.severity || ''}"\n`;
+    });
+
+    // Create and download file
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `security_logs_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // Show notification
+    showNotification('Logs exported successfully', 'success');
+}
+
+// Notification function
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg text-white max-w-sm ${
+        type === 'success' ? 'bg-green-500' :
+        type === 'error' ? 'bg-red-500' :
+        'bg-blue-500'
+    }`;
+
+    notification.innerHTML = `
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">
+                ${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}
+            </span>
+            <span>${message}</span>
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

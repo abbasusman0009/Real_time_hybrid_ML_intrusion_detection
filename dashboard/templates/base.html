@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{% block title %}RT-IDPS Dashboard{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0f172a",
+                        "card-dark": "#1e293b",
+                        "success": "#0bda5e",
+                        "danger": "#ef4444",
+                        "warning": "#f59e0b",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white overflow-hidden h-screen flex">
+<!-- Side Navigation -->
+<aside class="w-64 flex-shrink-0 flex flex-col border-r border-[#282e39] bg-background-dark">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-center px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 flex items-center justify-center bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-3xl">shield_lock</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold leading-normal">RT-IDPS</h1>
+<p class="text-[#9da6b9] text-xs font-normal leading-normal">Monitor V1.2</p>
+</div>
+</div>
+<div class="h-px bg-[#282e39] w-full my-2"></div>
+<div class="flex flex-col gap-2">
+<a href="{{ url_for('dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.endpoint == 'dashboard' %}bg-primary/20 text-primary{% else %}text-[#9da6b9] hover:bg-[#282e39]{% endif %} transition-colors">
+<span class="material-symbols-outlined {% if request.endpoint == 'dashboard' %}fill-1{% endif %}" style="font-variation-settings: 'FILL' {% if request.endpoint == 'dashboard' %}1{% else %}0{% endif %};">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a href="{{ url_for('alerts') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.endpoint == 'alerts' %}bg-primary/20 text-primary{% else %}text-[#9da6b9] hover:bg-[#282e39]{% endif %} transition-colors">
+<span class="material-symbols-outlined {% if request.endpoint == 'alerts' %}fill-1{% endif %}" style="font-variation-settings: 'FILL' {% if request.endpoint == 'alerts' %}1{% else %}0{% endif %};">shield</span>
+<p class="text-sm font-medium leading-normal">Intrusion Alerts</p>
+</a>
+<a href="{{ url_for('traffic') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.endpoint == 'traffic' %}bg-primary/20 text-primary{% else %}text-[#9da6b9] hover:bg-[#282e39]{% endif %} transition-colors">
+<span class="material-symbols-outlined {% if request.endpoint == 'traffic' %}fill-1{% endif %}" style="font-variation-settings: 'FILL' {% if request.endpoint == 'traffic' %}1{% else %}0{% endif %};">show_chart</span>
+<p class="text-sm font-medium leading-normal">Live Traffic</p>
+</a>
+<a href="{{ url_for('blocked') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.endpoint == 'blocked' %}bg-primary/20 text-primary{% else %}text-[#9da6b9] hover:bg-[#282e39]{% endif %} transition-colors">
+<span class="material-symbols-outlined {% if request.endpoint == 'blocked' %}fill-1{% endif %}" style="font-variation-settings: 'FILL' {% if request.endpoint == 'blocked' %}1{% else %}0{% endif %};">gpp_bad</span>
+<p class="text-sm font-medium leading-normal">Blocked IPs</p>
+</a>
+<a href="{{ url_for('logs') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.endpoint == 'logs' %}bg-primary/20 text-primary{% else %}text-[#9da6b9] hover:bg-[#282e39]{% endif %} transition-colors">
+<span class="material-symbols-outlined {% if request.endpoint == 'logs' %}fill-1{% endif %}" style="font-variation-settings: 'FILL' {% if request.endpoint == 'logs' %}1{% else %}0{% endif %};">description</span>
+<p class="text-sm font-medium leading-normal">Logs</p>
+</a>
+<a href="{{ url_for('status') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg {% if request.endpoint == 'status' %}bg-primary/20 text-primary{% else %}text-[#9da6b9] hover:bg-[#282e39]{% endif %} transition-colors">
+<span class="material-symbols-outlined {% if request.endpoint == 'status' %}fill-1{% endif %}" style="font-variation-settings: 'FILL' {% if request.endpoint == 'status' %}1{% else %}0{% endif %};">monitor_heart</span>
+<p class="text-sm font-medium leading-normal">System Status</p>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a href="{{ url_for('logout') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#9da6b9] hover:bg-[#282e39] hover:text-white transition-colors">
+<span class="material-symbols-outlined">logout</span>
+<p class="text-sm font-medium leading-normal">Sign Out</p>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+    {% block content %}{% endblock %}
+</main>
+
+    {% block extra_js %}{% endblock %}
+
+    <!-- Real-time Updates Script -->
+    <script>
+/**
+ * RT-IDPS Dashboard - Real-time Updates
+ * Handles auto-refresh of statistics and alerts
+ */
+
+// Configuration
+const REFRESH_INTERVALS = {
+    stats: 5000,      // 5 seconds
+    alerts: 3000,     // 3 seconds
+    traffic: 2000,    // 2 seconds
+    status: 10000     // 10 seconds
+};
+
+// Auto-refresh functions
+let refreshTimers = {};
+
+/**
+ * Start auto-refresh for a specific component
+ */
+function startAutoRefresh(component, url, updateFunction, interval) {
+    // Clear existing timer
+    if (refreshTimers[component]) {
+        clearInterval(refreshTimers[component]);
+    }
+
+    // Initial update
+    updateFunction(url);
+
+    // Set up periodic refresh
+    refreshTimers[component] = setInterval(() => {
+        updateFunction(url);
+    }, interval);
+}
+
+/**
+ * Stop auto-refresh for a component
+ */
+function stopAutoRefresh(component) {
+    if (refreshTimers[component]) {
+        clearInterval(refreshTimers[component]);
+        delete refreshTimers[component];
+    }
+}
+
+/**
+ * Stop all auto-refresh
+ */
+function stopAllAutoRefresh() {
+    Object.keys(refreshTimers).forEach(component => {
+        stopAutoRefresh(component);
+    });
+}
+
+/**
+ * Update dashboard statistics
+ */
+function updateStats(url) {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Update detector status
+            const statusBadge = document.getElementById('detector-status');
+            if (statusBadge) {
+                if (data.detector_running) {
+                    if (data.detector_paused) {
+                        statusBadge.innerHTML = '<span class="size-2 rounded-full bg-warning animate-pulse"></span> <span class="text-warning text-xs font-medium">Paused</span>';
+                    } else {
+                        statusBadge.innerHTML = '<span class="size-2 rounded-full bg-success animate-pulse"></span> <span class="text-success text-xs font-medium">Active</span>';
+                    }
+                } else {
+                    statusBadge.innerHTML = '<span class="size-2 rounded-full bg-gray-500"></span> <span class="text-gray-500 text-xs font-medium">Offline</span>';
+                }
+            }
+
+            // Update packet counter
+            const packetCounter = document.getElementById('packet-counter');
+            if (packetCounter && data.total_packets !== undefined) {
+                packetCounter.textContent = data.total_packets.toLocaleString();
+            }
+
+            // Update packet rate
+            const packetRate = document.getElementById('packet-rate');
+            if (packetRate && data.packets_per_second !== undefined) {
+                packetRate.textContent = `${data.packets_per_second.toFixed(1)} pps`;
+            }
+
+            // Update threat counts
+            const threatCount = document.getElementById('threat-count');
+            if (threatCount) {
+                const total = (data.threats_detected || 0);
+                threatCount.textContent = total.toLocaleString();
+            }
+
+            // Update blocked IPs
+            const blockedCount = document.getElementById('blocked-count');
+            if (blockedCount && data.blocked_ips !== undefined) {
+                blockedCount.textContent = data.blocked_ips.toLocaleString();
+            }
+        })
+        .catch(error => {
+            console.error('Error updating stats:', error);
+        });
+}
+
+/**
+ * Update recent alerts
+ */
+function updateAlerts(url) {
+    fetch(url)
+        .then(response => response.json())
+        .then(alerts => {
+            const alertContainer = document.getElementById('alert-feed');
+            if (!alertContainer || !alerts || alerts.length === 0) return;
+
+            // Build HTML for alerts
+            let html = '';
+            alerts.slice(0, 10).forEach(alert => {
+                const severity = alert.severity || 'Medium';
+                const severityColor = severity === 'Critical' ? 'danger' : 'warning';
+
+                html += `
+                <div class="p-3 hover:bg-[#282e39] transition-colors cursor-pointer border-l-2 border-${severityColor}">
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="text-white text-xs font-semibold">${alert.attack_type || 'Unknown'}</span>
+                        <span class="text-[#9da6b9] text-[10px]">${new Date(alert.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-[#9da6b9] text-[10px]">Src: ${alert.source_ip || alert.src_ip || 'Unknown'}</span>
+                        <span class="text-${severityColor} text-[10px] font-bold">${severity}</span>
+                    </div>
+                </div>
+                `;
+            });
+
+            alertContainer.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error updating alerts:', error);
+        });
+}
+
+/**
+ * Update live traffic
+ */
+function updateTraffic(url) {
+    fetch(url)
+        .then(response => response.json())
+        .then(packets => {
+            const trafficTable = document.getElementById('traffic-tbody');
+            if (!trafficTable || !packets || packets.length === 0) return;
+
+            // Build HTML for packets
+            let html = '';
+            packets.slice(0, 20).forEach(packet => {
+                const statusColor =
+                    packet.verdict === 'MALICIOUS' ? 'red' :
+                    packet.verdict === 'SUSPICIOUS' ? 'amber' :
+                    'emerald';
+
+                html += `
+                <tr class="group hover:bg-white/5 transition-colors cursor-pointer">
+                    <td class="p-4 text-sm text-slate-400 font-mono">${new Date(packet.timestamp).toLocaleTimeString()}</td>
+                    <td class="p-4"><span class="px-2 py-1 rounded text-[10px] font-bold bg-white/5 text-slate-300 border border-white/10">${packet.protocol}</span></td>
+                    <td class="p-4 text-sm text-slate-300 font-mono">${packet.src_ip}</td>
+                    <td class="p-4 text-sm text-slate-300 font-mono">${packet.dst_ip}</td>
+                    <td class="p-4 text-sm text-slate-400">${packet.dst_port || 'N/A'}</td>
+                    <td class="p-4 text-sm text-slate-400">${packet.size || '0 B'}</td>
+                    <td class="p-4">
+                        <div class="flex items-center gap-2 text-${statusColor}-500">
+                            <span class="material-symbols-outlined text-[18px]">${packet.verdict === 'Normal' ? 'check_circle' : 'warning'}</span>
+                            <span class="text-sm font-medium">${packet.verdict}</span>
+                        </div>
+                    </td>
+                </tr>
+                `;
+            });
+
+            trafficTable.innerHTML = html;
+        })
+        .catch(error => {
+            console.error('Error updating traffic:', error);
+        });
+}
+
+/**
+ * Control detector (start/stop/pause/resume)
+ */
+function controlDetector(action) {
+    fetch(`/api/detector/${action}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification(data.message, 'success');
+            // Refresh stats immediately
+            updateStats('/api/detector/stats');
+        } else {
+            showNotification(data.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error(`Error ${action}ing detector:`, error);
+        showNotification(`Failed to ${action} detector`, 'error');
+    });
+}
+
+/**
+ * Show notification
+ */
+function showNotification(message, type = 'info') {
+    // Simple console notification - can be replaced with toast library
+    console.log(`[${type.toUpperCase()}] ${message}`);
+
+    // TODO: Implement visual notification (toast/alert)
+    alert(message);
+}
+
+/**
+ * Initialize auto-refresh on page load
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Check which page we're on and start appropriate refresh
+    const currentPage = window.location.pathname;
+
+    if (currentPage.includes('/dashboard') || currentPage === '/') {
+        startAutoRefresh('stats', '/api/detector/stats', updateStats, REFRESH_INTERVALS.stats);
+        startAutoRefresh('alerts', '/api/alerts/live?limit=10', updateAlerts, REFRESH_INTERVALS.alerts);
+    }
+
+    if (currentPage.includes('/traffic')) {
+        startAutoRefresh('traffic', '/api/packets/live?limit=50', updateTraffic, REFRESH_INTERVALS.traffic);
+    }
+
+    if (currentPage.includes('/alerts')) {
+        startAutoRefresh('alerts', '/api/alerts/live?limit=50', updateAlerts, REFRESH_INTERVALS.alerts);
+    }
+});
+
+// Clean up on page unload
+window.addEventListener('beforeunload', () => {
+    stopAllAutoRefresh();
+});
+    </script>
+</body>
+</html>

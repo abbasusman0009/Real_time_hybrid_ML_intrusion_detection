@@ -1,0 +1,575 @@
+{% extends "base.html" %}
+
+{% block title %}RT-IDPS - Blocked IPs{% endblock %}
+
+{% block content %}
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto">
+    <div class="max-w-[1400px] mx-auto p-6 flex flex-col gap-6">
+        <!-- Page Heading -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div class="flex flex-col gap-1">
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Blocked IP Management</h2>
+                <p class="text-slate-500 dark:text-[#9da6b9] text-base font-normal">Monitor and manage network threats neutralized by the ML engine.</p>
+            </div>
+            <button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary hover:bg-blue-700 text-white text-sm font-bold transition-all shadow-lg shadow-blue-500/20" onclick="showManualBlockModal()">
+                <span class="material-symbols-outlined text-[20px]">add_circle</span>
+                <span>Add Manual Block</span>
+            </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="flex flex-col gap-2 rounded-xl p-6 border border-gray-200 bg-white dark:bg-[#111318] dark:border-[#282e39] shadow-sm">
+                <div class="flex justify-between items-start">
+                    <p class="text-gray-500 dark:text-[#9da6b9] text-sm font-medium">Total Blocked Today</p>
+                    <span class="material-symbols-outlined text-primary bg-primary/10 p-1.5 rounded-lg">shield</span>
+                </div>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <p class="text-gray-900 dark:text-white text-3xl font-bold">{{ stats.total_blocked_today or stats.blocked_ips or 0 }}</p>
+                    <span class="text-green-500 text-sm font-semibold flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                        {{ stats.blocked_change or '+2%' }}
+                    </span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2 rounded-xl p-6 border border-gray-200 bg-white dark:bg-[#111318] dark:border-[#282e39] shadow-sm">
+                <div class="flex justify-between items-start">
+                    <p class="text-gray-500 dark:text-[#9da6b9] text-sm font-medium">Active Blocks</p>
+                    <span class="material-symbols-outlined text-red-500 bg-red-500/10 p-1.5 rounded-lg">lock_clock</span>
+                </div>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <p class="text-gray-900 dark:text-white text-3xl font-bold">{{ stats.active_blocks or stats.blocked_ips or 0 }}</p>
+                    <span class="text-red-500 text-sm font-semibold flex items-center">
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                        {{ stats.active_blocks_change or '+5%' }}
+                    </span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2 rounded-xl p-6 border border-gray-200 bg-white dark:bg-[#111318] dark:border-[#282e39] shadow-sm">
+                <div class="flex justify-between items-start">
+                    <p class="text-gray-500 dark:text-[#9da6b9] text-sm font-medium">Top Attack Vector</p>
+                    <span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1.5 rounded-lg">warning</span>
+                </div>
+                <div class="mt-2">
+                    <p class="text-gray-900 dark:text-white text-3xl font-bold">{{ stats.top_attack_vector or 'SQL Injection' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="flex flex-col gap-4">
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <!-- Search -->
+                <div class="w-full sm:w-96">
+                    <label class="relative flex w-full items-center">
+                        <span class="absolute left-3 text-gray-400 dark:text-[#9da6b9] material-symbols-outlined">search</span>
+                        <input id="search-input" class="w-full h-11 pl-10 pr-4 rounded-lg bg-white dark:bg-[#1e232e] border border-gray-200 dark:border-[#282e39] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-[#64748b] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm" placeholder="Search by IP address or threat reason..."/>
+                    </label>
+                </div>
+                <!-- Chips -->
+                <div class="flex gap-2 overflow-x-auto pb-1 sm:pb-0 w-full sm:w-auto">
+                    <button id="status-filter-btn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white dark:bg-[#1e232e] border border-gray-200 dark:border-[#282e39] hover:bg-gray-50 dark:hover:bg-[#282e39]/80 transition-colors whitespace-nowrap">
+                        <span class="text-gray-700 dark:text-gray-200 text-xs font-medium">Status: All</span>
+                        <span class="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+                    </button>
+                    <button id="duration-filter-btn" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white dark:bg-[#1e232e] border border-gray-200 dark:border-[#282e39] hover:bg-gray-50 dark:hover:bg-[#282e39]/80 transition-colors whitespace-nowrap">
+                        <span class="text-gray-700 dark:text-gray-200 text-xs font-medium">Duration: All Time</span>
+                        <span class="material-symbols-outlined text-gray-400 text-[18px]">expand_more</span>
+                    </button>
+                    <button class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white dark:bg-[#1e232e] border border-gray-200 dark:border-[#282e39] hover:bg-gray-50 dark:hover:bg-[#282e39]/80 transition-colors whitespace-nowrap">
+                        <span class="text-gray-700 dark:text-gray-200 text-xs font-medium">Risk Level</span>
+                        <span class="material-symbols-outlined text-gray-400 text-[18px]">filter_list</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-[#282e39] bg-white dark:bg-[#111318] shadow-sm">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50 dark:bg-[#1a202c] border-b border-gray-200 dark:border-[#282e39]">
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider w-16">
+                                <input class="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-[#282e39] text-primary focus:ring-offset-0 focus:ring-1 focus:ring-primary h-4 w-4" type="checkbox"/>
+                            </th>
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider">IP Address</th>
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider">Reason / Threat</th>
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider">Detection Time</th>
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider">Duration</th>
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider">Status</th>
+                            <th class="py-3 px-4 text-xs font-semibold text-gray-500 dark:text-[#9da6b9] uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="blocked-ips-tbody" class="divide-y divide-gray-200 dark:divide-[#282e39]">
+                        {% for blocked_ip in blocked_ips %}
+                        <tr class="group hover:bg-gray-50 dark:hover:bg-[#1a202c] transition-colors">
+                            <td class="py-4 px-4">
+                                <input class="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-[#282e39] text-primary focus:ring-offset-0 focus:ring-1 focus:ring-primary h-4 w-4" type="checkbox"/>
+                            </td>
+                            <td class="py-4 px-4">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-mono text-sm text-gray-900 dark:text-white font-medium">{{ blocked_ip.ip }}</span>
+                                    <button class="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-primary" onclick="navigator.clipboard.writeText('{{ blocked_ip.ip }}')">
+                                        <span class="material-symbols-outlined text-[16px]">content_copy</span>
+                                    </button>
+                                </div>
+                                <span class="text-xs text-gray-500 dark:text-gray-400">{{ blocked_ip.country }}</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <div class="flex flex-col">
+                                    <span class="text-sm text-gray-900 dark:text-white font-medium">{{ blocked_ip.reason }}</span>
+                                    <span class="text-xs text-primary">{{ blocked_ip.confidence }}</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="text-sm text-gray-600 dark:text-[#9da6b9]">{{ blocked_ip.blocked_at.split()[0] if blocked_ip.blocked_at and ' ' in blocked_ip.blocked_at else blocked_ip.blocked_at or 'Unknown' }}</span>
+                                <span class="block text-xs text-gray-500 dark:text-gray-500">{{ blocked_ip.blocked_at.split()[1] if blocked_ip.blocked_at and ' ' in blocked_ip.blocked_at else '' }} UTC</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="text-sm text-gray-600 dark:text-[#9da6b9]">{{ blocked_ip.duration }}</span>
+                            </td>
+                            <td class="py-4 px-4">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if blocked_ip.status == 'Active' %}bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-900/50{% else %}bg-gray-100 text-gray-800 dark:bg-gray-700/30 dark:text-gray-400 border border-gray-200 dark:border-gray-600/50{% endif %}">
+                                    {{ blocked_ip.status or 'Active' }}
+                                </span>
+                            </td>
+                            <td class="py-4 px-4 text-right">
+                                <button class="text-gray-400 hover:text-red-500 p-1 rounded hover:bg-gray-700/50" onclick="unblockIP('{{ blocked_ip.ip }}')">
+                                    <span class="material-symbols-outlined">block</span>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <div class="px-4 py-3 border-t border-gray-200 dark:border-[#282e39] flex items-center justify-between sm:px-6">
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p id="pagination-info" class="text-sm text-gray-700 dark:text-slate-400">
+                            Showing
+                            <span class="font-medium text-gray-900 dark:text-white">1</span>
+                            to
+                            <span class="font-medium text-gray-900 dark:text-white">{{ blocked_ips|length }}</span>
+                            of
+                            <span class="font-medium text-gray-900 dark:text-white">{{ blocked_ips|length }}</span>
+                            results
+                        </p>
+                    </div>
+                    <div>
+                        <nav id="pagination-nav" aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                            <a class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark" href="#">
+                                <span class="sr-only">Previous</span>
+                                <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+                            </a>
+                            <a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">1</a>
+                            <a class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark" href="#">
+                                <span class="sr-only">Next</span>
+                                <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden div to store blocked IPs data -->
+<div id="blocked-ips-data" style="display: none;">{{ blocked_ips|tojson|safe }}</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+/**
+ * Blocked IPs page specific JavaScript functions
+ */
+
+// Global variables for pagination and filtering
+let currentPage = 1;
+let itemsPerPage = 10;
+let filteredBlockedIPs = [];
+let searchQuery = '';
+let statusFilter = 'all';
+let durationFilter = 'all';
+let blocked_ips_data = [];
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Get initial data
+    try {
+        const dataElement = document.getElementById('blocked-ips-data');
+        if (dataElement && dataElement.textContent) {
+            blocked_ips_data = JSON.parse(dataElement.textContent);
+        }
+    } catch (e) {
+        console.error('Error parsing blocked IPs data:', e);
+        blocked_ips_data = [];
+    }
+    
+    filteredBlockedIPs = [...blocked_ips_data];
+    renderTable();
+    updatePagination();
+
+    // Set up event listeners
+    setupEventListeners();
+});
+
+// Setup event listeners
+function setupEventListeners() {
+    // Search input
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            searchQuery = e.target.value.toLowerCase();
+            applyFilters();
+        });
+    }
+
+    // Status filter
+    const statusButton = document.getElementById('status-filter-btn');
+    if (statusButton) {
+        statusButton.addEventListener('click', function() {
+            statusFilter = statusFilter === 'all' ? 'active' : statusFilter === 'active' ? 'expired' : 'all';
+            updateStatusFilterDisplay();
+            applyFilters();
+        });
+    }
+
+    // Duration filter
+    const durationButton = document.getElementById('duration-filter-btn');
+    if (durationButton) {
+        durationButton.addEventListener('click', function() {
+            durationFilter = durationFilter === 'all' ? '24h' : durationFilter === '24h' ? 'permanent' : 'all';
+            updateDurationFilterDisplay();
+            applyFilters();
+        });
+    }
+}
+
+// Update filter display
+function updateStatusFilterDisplay() {
+    const statusButton = document.getElementById('status-filter-btn');
+    if (statusButton) {
+        const span = statusButton.querySelector('span:first-child');
+        if (span) {
+            span.textContent = `Status: ${statusFilter.charAt(0).toUpperCase() + statusFilter.slice(1)}`;
+        }
+    }
+}
+
+function updateDurationFilterDisplay() {
+    const durationButton = document.getElementById('duration-filter-btn');
+    if (durationButton) {
+        const span = durationButton.querySelector('span:first-child');
+        if (span) {
+            span.textContent = `Duration: ${durationFilter === 'all' ? 'All Time' : durationFilter === '24h' ? '24 Hours' : 'Permanent'}`;
+        }
+    }
+}
+
+// Apply filters
+function applyFilters() {
+    filteredBlockedIPs = blocked_ips_data.filter(ip => {
+        // Search filter
+        const matchesSearch = !searchQuery ||
+            ip.ip.toLowerCase().includes(searchQuery) ||
+            ip.reason.toLowerCase().includes(searchQuery) ||
+            (ip.country && ip.country.toLowerCase().includes(searchQuery));
+
+        // Status filter
+        const matchesStatus = statusFilter === 'all' || 
+            (ip.status && ip.status.toLowerCase() === statusFilter);
+
+        // Duration filter
+        const matchesDuration = durationFilter === 'all' ||
+            (durationFilter === '24h' && ip.duration.includes('24')) ||
+            (durationFilter === 'permanent' && ip.duration.toLowerCase().includes('permanent'));
+
+        return matchesSearch && matchesStatus && matchesDuration;
+    });
+
+    currentPage = 1;
+    renderTable();
+    updatePagination();
+}
+
+// Render table
+function renderTable() {
+    const tbody = document.getElementById('blocked-ips-tbody');
+    if (!tbody) return;
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const pageData = filteredBlockedIPs.slice(startIndex, endIndex);
+
+    if (pageData.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="py-8 px-4 text-center text-gray-500 dark:text-gray-400">
+                    No blocked IPs found
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = pageData.map(ip => `
+        <tr class="group hover:bg-gray-50 dark:hover:bg-[#1a202c] transition-colors">
+            <td class="py-4 px-4">
+                <input class="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-[#282e39] text-primary focus:ring-offset-0 focus:ring-1 focus:ring-primary h-4 w-4" type="checkbox"/>
+            </td>
+            <td class="py-4 px-4">
+                <div class="flex items-center gap-2">
+                    <span class="font-mono text-sm text-gray-900 dark:text-white font-medium">${ip.ip}</span>
+                    <button class="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-primary" onclick="navigator.clipboard.writeText('${ip.ip}')">
+                        <span class="material-symbols-outlined text-[16px]">content_copy</span>
+                    </button>
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">${ip.country || 'Unknown'}</span>
+            </td>
+            <td class="py-4 px-4">
+                <div class="flex flex-col">
+                    <span class="text-sm text-gray-900 dark:text-white font-medium">${ip.reason}</span>
+                    <span class="text-xs text-primary">${ip.confidence || 'N/A'}</span>
+                </div>
+            </td>
+            <td class="py-4 px-4">
+                <span class="text-sm text-gray-600 dark:text-[#9da6b9]">${ip.blocked_at ? ip.blocked_at.split(' ')[0] : 'Unknown'}</span>
+                <span class="block text-xs text-gray-500 dark:text-gray-500">${ip.blocked_at ? (ip.blocked_at.split(' ')[1] || '') : ''} UTC</span>
+            </td>
+            <td class="py-4 px-4">
+                <span class="text-sm text-gray-600 dark:text-[#9da6b9]">${ip.duration}</span>
+            </td>
+            <td class="py-4 px-4">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${ip.status === 'Active' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-900/50' : 'bg-gray-100 text-gray-800 dark:bg-gray-700/30 dark:text-gray-400 border border-gray-200 dark:border-gray-600/50'}">
+                    ${ip.status || 'Active'}
+                </span>
+            </td>
+            <td class="py-4 px-4 text-right">
+                <button class="text-gray-400 hover:text-red-500 p-1 rounded hover:bg-gray-700/50" onclick="unblockIP('${ip.ip}')">
+                    <span class="material-symbols-outlined">block</span>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Update pagination
+function updatePagination() {
+    const totalPages = Math.ceil(filteredBlockedIPs.length / itemsPerPage);
+    const paginationInfo = document.getElementById('pagination-info');
+
+    if (paginationInfo) {
+        const startItem = filteredBlockedIPs.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+        const endItem = Math.min(currentPage * itemsPerPage, filteredBlockedIPs.length);
+
+        paginationInfo.innerHTML = `
+            Showing
+            <span class="font-medium text-gray-900 dark:text-white">${startItem}</span>
+            to
+            <span class="font-medium text-gray-900 dark:text-white">${endItem}</span>
+            of
+            <span class="font-medium text-gray-900 dark:text-white">${filteredBlockedIPs.length}</span>
+            results
+        `;
+    }
+
+    // Update pagination buttons
+    updatePaginationButtons(totalPages);
+}
+
+function updatePaginationButtons(totalPages) {
+    const paginationNav = document.getElementById('pagination-nav');
+    if (!paginationNav) return;
+
+    let buttonsHtml = '';
+
+    // Previous button
+    buttonsHtml += `<a class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}" href="#" onclick="event.preventDefault(); changePage(${currentPage - 1})">
+        <span class="sr-only">Previous</span>
+        <span class="material-symbols-outlined text-[20px]">chevron_left</span>
+    </a>`;
+
+    // Page numbers
+    for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+        if (i === currentPage) {
+            buttonsHtml += `<a aria-current="page" class="z-10 bg-primary/10 border-primary text-primary relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">${i}</a>`;
+        } else {
+            buttonsHtml += `<a class="bg-white dark:bg-[#1e232e] border-gray-300 dark:border-[#282e39] text-gray-500 dark:text-[#9da6b9] hover:bg-gray-50 dark:hover:bg-[#282e39] relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#" onclick="event.preventDefault(); changePage(${i})">${i}</a>`;
+        }
+    }
+
+    // Next button
+    buttonsHtml += `<a class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-border-dark dark:hover:bg-background-dark ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}" href="#" onclick="event.preventDefault(); changePage(${currentPage + 1})">
+        <span class="sr-only">Next</span>
+        <span class="material-symbols-outlined text-[20px]">chevron_right</span>
+    </a>`;
+
+    paginationNav.innerHTML = buttonsHtml;
+}
+
+function changePage(page) {
+    const totalPages = Math.ceil(filteredBlockedIPs.length / itemsPerPage);
+    if (page < 1 || page > totalPages) return;
+
+    currentPage = page;
+    renderTable();
+    updatePagination();
+}
+
+// Manual block functions
+function showManualBlockModal() {
+    // Create modal
+    const modal = document.createElement('div');
+    modal.id = 'block-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50';
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-[#1e232e] rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Add Manual Block</h3>
+                <form id="manual-block-form" onsubmit="submitManualBlock(event)">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">IP Address</label>
+                        <input type="text" name="ip_address" required
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#282e39] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                               placeholder="192.168.1.100">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Reason</label>
+                        <input type="text" name="reason" required
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#282e39] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent"
+                               placeholder="Suspicious activity">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Duration</label>
+                        <select name="duration" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-[#282e39] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="3600">1 Hour</option>
+                            <option value="86400">24 Hours</option>
+                            <option value="604800">1 Week</option>
+                            <option value="2592000">1 Month</option>
+                            <option value="0">Permanent</option>
+                        </select>
+                    </div>
+                    <div class="flex justify-end gap-3">
+                        <button type="button" onclick="closeModal()"
+                                class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors">
+                            Block IP
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+function closeModal() {
+    const modal = document.getElementById('block-modal');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+async function submitManualBlock(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const data = {
+        ip_address: formData.get('ip_address'),
+        reason: formData.get('reason'),
+        duration: parseInt(formData.get('duration'))
+    };
+
+    try {
+        const response = await fetch('/api/blocked/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showNotification(`IP ${data.ip_address} blocked successfully`, 'success');
+            closeModal();
+            // Refresh the page to show updated data
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            showNotification(result.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error blocking IP:', error);
+        showNotification('Error blocking IP', 'error');
+    }
+}
+
+// Unblock IP function
+async function unblockIP(ipAddress) {
+    if (!confirm(`Are you sure you want to unblock ${ipAddress}?`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/blocked/remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ip_address: ipAddress })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            showNotification(`IP ${ipAddress} unblocked successfully`, 'success');
+            // Refresh the page to show updated data
+            setTimeout(() => window.location.reload(), 1000);
+        } else {
+            showNotification(result.message, 'error');
+        }
+    } catch (error) {
+        console.error('Error unblocking IP:', error);
+        showNotification('Error unblocking IP', 'error');
+    }
+}
+
+// Notification function
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg text-white max-w-sm ${
+        type === 'success' ? 'bg-green-500' :
+        type === 'error' ? 'bg-red-500' :
+        'bg-blue-500'
+    }`;
+
+    notification.innerHTML = `
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">
+                ${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}
+            </span>
+            <span>${message}</span>
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

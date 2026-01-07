@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RT-IDPS Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        .glow-effect {
+            box-shadow: 0 0 50px -10px rgba(17, 82, 212, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col relative overflow-hidden cyber-grid">
+    <!-- Background Elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[100px] opacity-40"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[80px] opacity-30"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-20 flex items-center justify-between whitespace-nowrap px-10 py-4 w-full">
+        <div class="flex items-center gap-3 text-gray-900 dark:text-white">
+            <div class="size-8 text-primary">
+                <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+                </svg>
+            </div>
+            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">RT-IDPS</h2>
+        </div>
+        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <span class="material-symbols-outlined text-[18px]">verified_user</span>
+            <span>Secure System</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 flex-1 flex items-center justify-center p-4">
+        <div class="glow-effect w-full max-w-[480px] bg-white dark:bg-[#1a1d24] border border-gray-200 dark:border-gray-800 rounded-xl p-8 shadow-2xl backdrop-blur-sm">
+            <!-- Headline -->
+            <div class="text-center mb-8">
+                <h1 class="text-gray-900 dark:text-white tracking-tight text-3xl font-bold leading-tight mb-2">RT-IDPS Admin Portal</h1>
+                <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">Secure Access Gateway</p>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="mb-4 bg-{{ 'red' if category == 'error' else 'green' if category == 'success' else 'yellow' }}-500/10 border border-{{ 'red' if category == 'error' else 'green' if category == 'success' else 'yellow' }}-500/20 rounded-lg p-3 flex items-start gap-3">
+                        <span class="material-symbols-outlined text-{{ 'red' if category == 'error' else 'green' if category == 'success' else 'yellow' }}-500 text-sm mt-0.5">
+                            {{ 'error' if category == 'error' else 'check_circle' if category == 'success' else 'info' }}
+                        </span>
+                        <p class="text-{{ 'red' if category == 'error' else 'green' if category == 'success' else 'yellow' }}-500 text-sm font-medium">{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <!-- Login Form -->
+            <form method="POST" action="{{ url_for('login') }}" class="flex flex-col gap-5">
+                <!-- Administrator ID -->
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-gray-900 dark:text-white text-sm font-medium leading-normal">Administrator ID</label>
+                    <div class="relative flex w-full items-center rounded-lg group">
+                        <input name="username" class="peer flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] focus:border-primary h-12 placeholder:text-gray-400 dark:placeholder:text-[#9da6b9] px-4 pl-11 text-base font-normal leading-normal transition-all" placeholder="Enter admin username" type="text" required/>
+                        <div class="absolute left-3 text-gray-400 dark:text-[#9da6b9] peer-focus:text-primary transition-colors pointer-events-none flex items-center">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="flex flex-col gap-1.5">
+                    <div class="flex justify-between items-center">
+                        <label class="text-gray-900 dark:text-white text-sm font-medium leading-normal">Password</label>
+                        <a class="text-xs text-primary hover:text-primary/80 font-medium" href="#">Forgot Password?</a>
+                    </div>
+                    <div class="relative flex w-full items-center rounded-lg">
+                        <input name="password" id="password" class="peer flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-300 dark:border-[#3b4354] bg-white dark:bg-[#1c1f27] focus:border-primary h-12 placeholder:text-gray-400 dark:placeholder:text-[#9da6b9] px-4 pl-11 pr-11 text-base font-normal leading-normal transition-all" placeholder="Enter password" type="password" required/>
+                        <div class="absolute left-3 text-gray-400 dark:text-[#9da6b9] peer-focus:text-primary transition-colors pointer-events-none flex items-center">
+                            <span class="material-symbols-outlined">lock</span>
+                        </div>
+                        <button class="absolute right-3 text-gray-400 dark:text-[#9da6b9] hover:text-gray-600 dark:hover:text-gray-200 transition-colors flex items-center cursor-pointer" type="button" onclick="togglePassword()">
+                            <span class="material-symbols-outlined" id="toggleIcon">visibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-primary hover:bg-primary/90 text-white gap-2 px-5 text-base font-bold leading-normal tracking-[0.015em] transition-all shadow-lg shadow-primary/25 mt-2">
+                    <span class="material-symbols-outlined text-[20px]">login</span>
+                    <span class="truncate">Authenticate Session</span>
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col items-center gap-4">
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
+                    <div class="size-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <span class="text-xs font-medium text-gray-600 dark:text-gray-400">System Status: Operational</span>
+                </div>
+                <p class="text-xs text-center text-gray-400 dark:text-gray-600">
+                    Restricted Access. Authorized Personnel Only.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function togglePassword() {
+            const password = document.getElementById('password');
+            const icon = document.getElementById('toggleIcon');
+            if (password.type === 'password') {
+                password.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                password.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        }
+    </script>
+</body>
+</html>
