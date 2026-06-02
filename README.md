@@ -1,5 +1,8 @@
 # RT-IDPS Project Setup & UI Integration Guide
 
+For the current project explanation and step-by-step run instructions, see
+[`PROJECT_RUNBOOK.md`](PROJECT_RUNBOOK.md).
+
 ## 🎯 Project Status
 
 ✅ **PHASE 1 COMPLETE**: Project structure created

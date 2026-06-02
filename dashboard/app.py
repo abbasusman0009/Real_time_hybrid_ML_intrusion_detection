@@ -16,7 +16,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.config import DASHBOARD_CONFIG, SECURITY_CONFIG, INTRUSION_LOG_PATH
 from utils.logger import setup_logger
-from realtime.detector_service import get_detector_service
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -29,8 +28,65 @@ CORS(app)
 # Setup logger
 logger = setup_logger('Dashboard', log_file='logs/dashboard.log')
 
-# Get detector service
-detector_service = get_detector_service()
+class DetectorServiceUnavailable:
+    """Fallback service used when realtime packet capture cannot be initialized."""
+
+    unavailable_reason = "Realtime detector unavailable. Scapy could not access network sockets."
+
+    def is_running(self):
+        return False
+
+    def load_models(self):
+        return False
+
+    def start(self):
+        logger.warning(self.unavailable_reason)
+        return False
+
+    def stop(self):
+        return False
+
+    def pause(self):
+        return False
+
+    def resume(self):
+        return False
+
+    def get_statistics(self):
+        return {
+            "status": "unavailable",
+            "paused": False,
+            "total_packets": 0,
+            "normal": 0,
+            "suspicious": 0,
+            "malicious": 0,
+            "packets_per_second": 0,
+            "uptime": 0,
+            "error": self.unavailable_reason,
+        }
+
+    def get_recent_alerts(self, limit=20):
+        return []
+
+    def get_recent_packets(self, limit=50):
+        return []
+
+    def get_blocked_ips(self):
+        return []
+
+    def block_ip_manual(self, ip_address, reason="Manual block"):
+        return False
+
+    def unblock_ip(self, ip_address):
+        return False
+
+
+try:
+    from realtime.detector_service import get_detector_service
+    detector_service = get_detector_service()
+except Exception as exc:
+    logger.warning(f"Detector service unavailable during dashboard startup: {exc}")
+    detector_service = DetectorServiceUnavailable()
 
 # ==================== Authentication Decorator ====================
 
