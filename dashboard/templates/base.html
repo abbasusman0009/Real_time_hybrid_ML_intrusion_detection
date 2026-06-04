@@ -171,8 +171,11 @@ function updateStats(url) {
             // Update detector status
             const statusBadge = document.getElementById('detector-status');
             if (statusBadge) {
-                if (data.detector_running) {
-                    if (data.detector_paused) {
+                const detectorRunning = data.detector_running ?? data.status === 'running';
+                const detectorPaused = data.detector_paused ?? data.paused;
+
+                if (detectorRunning) {
+                    if (detectorPaused) {
                         statusBadge.innerHTML = '<span class="size-2 rounded-full bg-warning animate-pulse"></span> <span class="text-warning text-xs font-medium">Paused</span>';
                     } else {
                         statusBadge.innerHTML = '<span class="size-2 rounded-full bg-success animate-pulse"></span> <span class="text-success text-xs font-medium">Active</span>';
@@ -257,31 +260,43 @@ function updateTraffic(url) {
         .then(response => response.json())
         .then(packets => {
             const trafficTable = document.getElementById('traffic-tbody');
-            if (!trafficTable || !packets || packets.length === 0) return;
+            if (!trafficTable) return;
+            if (!packets || packets.length === 0) {
+                trafficTable.innerHTML = `
+                    <div class="p-4 rounded-lg bg-slate-50 dark:bg-surface-dark/50 border border-slate-200 dark:border-border-dark text-sm text-slate-500 dark:text-slate-400">
+                        No live packets captured yet.
+                    </div>
+                `;
+                return;
+            }
 
             // Build HTML for packets
             let html = '';
             packets.slice(0, 20).forEach(packet => {
+                const verdict = packet.verdict || packet.status || 'UNKNOWN';
                 const statusColor =
-                    packet.verdict === 'MALICIOUS' ? 'red' :
-                    packet.verdict === 'SUSPICIOUS' ? 'amber' :
+                    verdict === 'MALICIOUS' ? 'red' :
+                    verdict === 'SUSPICIOUS' ? 'amber' :
                     'emerald';
+                const icon = verdict === 'NORMAL' || verdict === 'Normal' ? 'check_circle' : 'warning';
+                const timestamp = packet.timestamp ? new Date(packet.timestamp).toLocaleTimeString() : 'Just now';
 
                 html += `
-                <tr class="group hover:bg-white/5 transition-colors cursor-pointer">
-                    <td class="p-4 text-sm text-slate-400 font-mono">${new Date(packet.timestamp).toLocaleTimeString()}</td>
-                    <td class="p-4"><span class="px-2 py-1 rounded text-[10px] font-bold bg-white/5 text-slate-300 border border-white/10">${packet.protocol}</span></td>
-                    <td class="p-4 text-sm text-slate-300 font-mono">${packet.src_ip}</td>
-                    <td class="p-4 text-sm text-slate-300 font-mono">${packet.dst_ip}</td>
-                    <td class="p-4 text-sm text-slate-400">${packet.dst_port || 'N/A'}</td>
-                    <td class="p-4 text-sm text-slate-400">${packet.size || '0 B'}</td>
-                    <td class="p-4">
-                        <div class="flex items-center gap-2 text-${statusColor}-500">
-                            <span class="material-symbols-outlined text-[18px]">${packet.verdict === 'Normal' ? 'check_circle' : 'warning'}</span>
-                            <span class="text-sm font-medium">${packet.verdict}</span>
-                        </div>
-                    </td>
-                </tr>
+                <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-50 dark:bg-surface-dark/50 border border-slate-200 dark:border-border-dark hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors">
+                    <div class="flex items-center gap-2 min-w-0 flex-1">
+                        <div class="w-2 h-2 rounded-full bg-${statusColor}-500"></div>
+                        <span class="text-xs font-mono text-slate-600 dark:text-slate-400">${packet.src_ip || packet.source_ip || 'Unknown'}</span>
+                        <span class="material-symbols-outlined text-slate-400 !text-[16px]">arrow_forward</span>
+                        <span class="text-xs font-mono text-slate-600 dark:text-slate-400">${packet.dst_ip || packet.dest_ip || 'Unknown'}</span>
+                    </div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">${packet.protocol || 'Unknown'}:${packet.dst_port || packet.port || 'N/A'}</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">${packet.size_label || `${packet.size || 0} B`}</div>
+                    <div class="px-2 py-1 rounded text-xs font-medium bg-${statusColor}-100 dark:bg-${statusColor}-500/20 text-${statusColor}-700 dark:text-${statusColor}-400 flex items-center gap-1">
+                        <span class="material-symbols-outlined !text-[14px]">${icon}</span>
+                        <span>${verdict}</span>
+                    </div>
+                    <div class="text-xs text-slate-400 dark:text-slate-500">${timestamp}</div>
+                </div>
                 `;
             });
 

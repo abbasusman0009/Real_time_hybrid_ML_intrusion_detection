@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import os
 import sys
 import csv
+import time
 from functools import wraps
 
 # Add parent directory to path for imports
@@ -32,6 +33,7 @@ class DetectorServiceUnavailable:
     """Fallback service used when realtime packet capture cannot be initialized."""
 
     unavailable_reason = "Realtime detector unavailable. Scapy could not access network sockets."
+    engine = None
 
     def is_running(self):
         return False
@@ -63,6 +65,10 @@ class DetectorServiceUnavailable:
             "packets_per_second": 0,
             "uptime": 0,
             "error": self.unavailable_reason,
+            "capture_error": self.unavailable_reason,
+            "detector_running": False,
+            "detector_paused": False,
+            "threats_detected": 0,
         }
 
     def get_recent_alerts(self, limit=20):
@@ -222,7 +228,6 @@ def api_recent_alerts():
 @login_required
 def api_live_traffic():
     """API endpoint for live traffic data"""
-    # This will be connected to the real-time detector later
     traffic_data = get_live_traffic()
     return jsonify(traffic_data)
 
@@ -308,6 +313,14 @@ def api_detector_start():
         success = detector_service.start()
 
         if success:
+            time.sleep(0.2)
+            detector_stats = detector_service.get_statistics()
+            if not detector_service.is_running() and detector_stats.get('capture_error'):
+                return jsonify({
+                    "success": False,
+                    "message": detector_stats['capture_error']
+                })
+
             logger.info("Detector service started via API")
             return jsonify({"success": True, "message": "Detector started successfully"})
         else:
@@ -398,7 +411,7 @@ def api_live_packets():
     try:
         limit = request.args.get('limit', 50, type=int)
         packets = detector_service.get_recent_packets(limit=limit)
-        return jsonify(packets)
+        return jsonify([normalize_packet(packet) for packet in packets])
     except Exception as e:
         logger.error(f"Error getting live packets: {e}")
         return jsonify([])
@@ -734,6 +747,31 @@ def get_recent_alerts(limit=10):
 
     return alerts
 
+def normalize_packet(packet):
+    """Return one consistent packet shape for templates and live APIs."""
+    size = packet.get('size', packet.get('packet_size', 0)) or 0
+    verdict = packet.get('verdict', packet.get('status', 'UNKNOWN')) or 'UNKNOWN'
+    src_ip = packet.get('src_ip', packet.get('source_ip', 'Unknown'))
+    dst_ip = packet.get('dst_ip', packet.get('dest_ip', 'Unknown'))
+
+    return {
+        'timestamp': packet.get('timestamp', ''),
+        'protocol': packet.get('protocol', 'Unknown'),
+        'src_ip': src_ip,
+        'dst_ip': dst_ip,
+        'source_ip': src_ip,
+        'dest_ip': dst_ip,
+        'src_port': packet.get('src_port'),
+        'dst_port': packet.get('dst_port', packet.get('port')),
+        'port': str(packet.get('dst_port', packet.get('port', 'N/A'))),
+        'size': size,
+        'size_label': f"{size} B",
+        'verdict': verdict,
+        'status': verdict.title() if isinstance(verdict, str) else verdict,
+        'confidence': packet.get('confidence'),
+        'explanation': packet.get('explanation', ''),
+    }
+
 def get_blocked_ips():
     """Get list of blocked IP addresses"""
     # Get from detector service
@@ -791,39 +829,11 @@ def get_live_traffic():
     """Get live traffic data"""
     # Get from detector service
     try:
-        if detector_service.is_running():
-            packets = detector_service.get_recent_packets(limit=50)
-
-            if packets:
-                # Convert to expected format
-                traffic = []
-                for packet in packets:
-                    traffic.append({
-                        'timestamp': packet.get('timestamp', ''),
-                        'protocol': packet.get('protocol', 'Unknown'),
-                        'source_ip': packet.get('src_ip', 'Unknown'),
-                        'dest_ip': packet.get('dst_ip', 'Unknown'),
-                        'port': str(packet.get('dst_port', 'N/A')),
-                        'size': f"{packet.get('size', 0)} B",
-                        'status': packet.get('verdict', 'Unknown')
-                    })
-                return traffic
+        packets = detector_service.get_recent_packets(limit=50)
+        return [normalize_packet(packet) for packet in packets]
     except Exception as e:
         logger.error(f"Error getting live traffic: {e}")
-
-    # Fallback to sample data
-    traffic = [
-        {
-            'timestamp': datetime.now().strftime('%H:%M:%S'),
-            'protocol': 'TCP',
-            'source_ip': '192.168.1.105',
-            'dest_ip': '45.33.22.11',
-            'port': '443',
-            'size': '124 B',
-            'status': 'Normal'
-        }
-    ]
-    return traffic
+        return []
 
 def get_system_status():
     """Get system health status"""

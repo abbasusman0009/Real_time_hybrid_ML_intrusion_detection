@@ -1,0 +1,65 @@
+[32mINFO[0m | 2026-06-04 11:38:43 | HybridDecision | Loading trained models...
+[32mINFO[0m | 2026-06-04 11:38:45 | HybridDecision | ✓ Random Forest loaded
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision | ✓ K-Means loaded
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision | ✓ All models loaded successfully
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision | 
+Model Information:
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |   Random Forest:
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |     - Estimators: 100
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |     - Features: 20
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |     - Accuracy: 0.9940
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |   K-Means:
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |     - Clusters: 5
+[32mINFO[0m | 2026-06-04 11:38:46 | HybridDecision |     - Threshold: 5.7983
+[32mINFO[0m | 2026-06-04 11:49:14 | HybridDecision | Loading trained models...
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision | ✓ Random Forest loaded
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision | ✓ K-Means loaded
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision | ✓ All models loaded successfully
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision | 
+Model Information:
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |   Random Forest:
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |     - Estimators: 100
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |     - Features: 20
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |     - Accuracy: 0.9940
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |   K-Means:
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |     - Clusters: 5
+[32mINFO[0m | 2026-06-04 11:49:15 | HybridDecision |     - Threshold: 5.7983
+[32mINFO[0m | 2026-06-04 11:55:15 | HybridDecision | Loading trained models...
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision | ✓ Random Forest loaded
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision | ✓ K-Means loaded
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision | ✓ All models loaded successfully
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision | 
+Model Information:
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |   Random Forest:
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |     - Estimators: 100
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |     - Features: 20
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |     - Accuracy: 0.9940
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |   K-Means:
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |     - Clusters: 5
+[32mINFO[0m | 2026-06-04 11:55:16 | HybridDecision |     - Threshold: 5.7983
+[32mINFO[0m | 2026-06-04 11:57:53 | HybridDecision | Loading trained models...
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision | ✓ Random Forest loaded
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision | ✓ K-Means loaded
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision | ✓ All models loaded successfully
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision | 
+Model Information:
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |   Random Forest:
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |     - Estimators: 100
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |     - Features: 20
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |     - Accuracy: 0.9940
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |   K-Means:
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |     - Clusters: 5
+[32mINFO[0m | 2026-06-04 11:57:54 | HybridDecision |     - Threshold: 5.7983
+[32mINFO[0m | 2026-06-04 12:24:43 | HybridDecision | Loading trained models...
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision | ✓ Random Forest loaded
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision | ✓ K-Means loaded
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision | ✓ All models loaded successfully
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision | 
+Model Information:
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |   Random Forest:
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |     - Estimators: 100
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |     - Features: 20
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |     - Accuracy: 0.9940
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |   K-Means:
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |     - Clusters: 5
+[32mINFO[0m | 2026-06-04 12:24:44 | HybridDecision |     - Threshold: 5.7983

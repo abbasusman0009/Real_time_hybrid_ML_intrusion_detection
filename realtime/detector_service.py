@@ -41,6 +41,7 @@ class DetectorService:
         self.running = False
         self.paused = False
         self.thread = None
+        self.capture_error = None
 
         # Data queues
         self.alert_queue = queue.Queue(maxsize=100)
@@ -97,6 +98,7 @@ class DetectorService:
 
         self.running = True
         self.paused = False
+        self.capture_error = None
         self.stats['start_time'] = time.time()
 
         # Start detection thread
@@ -168,6 +170,19 @@ class DetectorService:
                 # Update statistics
                 self._update_stats()
 
+            except PermissionError:
+                self.capture_error = (
+                    "Packet capture permission denied. Start the dashboard with sudo/root "
+                    "or grant packet-capture capabilities to the Python interpreter."
+                )
+                logger.error(self.capture_error)
+                self.running = False
+                break
+            except RuntimeError as e:
+                self.capture_error = str(e)
+                logger.error(f"Capture unavailable: {e}")
+                self.running = False
+                break
             except Exception as e:
                 logger.error(f"Error in detection loop: {e}")
                 time.sleep(1)
@@ -384,6 +399,10 @@ class DetectorService:
             'uptime': round(self.stats['uptime'], 2),
             'status': 'running' if self.running else 'stopped',
             'paused': self.paused,
+            'capture_error': self.capture_error,
+            'detector_running': self.running,
+            'detector_paused': self.paused,
+            'threats_detected': self.stats['malicious'] + self.stats['suspicious'],
             'blocked_ips': len(self.blocker.get_blocked_ips())
         }
 

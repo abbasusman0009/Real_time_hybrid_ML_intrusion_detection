@@ -3,13 +3,6 @@ RT-IDPS Packet Sniffer Module
 Captures live network traffic using Scapy
 """
 
-try:
-    from scapy.all import sniff, IP, TCP, UDP, ICMP
-    SCAPY_AVAILABLE = True
-except ImportError:
-    logger.warning("Scapy not available. Packet sniffer will run in simulation mode.")
-    logger.info("To install scapy: pip install scapy")
-    SCAPY_AVAILABLE = False
 import sys
 import os
 from datetime import datetime
@@ -23,6 +16,20 @@ from utils.logger import setup_logger
 
 # Setup logger
 logger = setup_logger('PacketSniffer', log_file='logs/packet_sniffer.log')
+
+try:
+    from scapy.all import sniff, IP, TCP, UDP, ICMP
+    SCAPY_AVAILABLE = True
+    SCAPY_IMPORT_ERROR = None
+except ImportError as e:
+    SCAPY_AVAILABLE = False
+    SCAPY_IMPORT_ERROR = e
+    logger.warning("Scapy not available. Packet capture is disabled.")
+    logger.info("To install scapy: pip install scapy")
+except Exception as e:
+    SCAPY_AVAILABLE = False
+    SCAPY_IMPORT_ERROR = e
+    logger.warning(f"Scapy could not initialize packet capture: {e}")
 
 
 class PacketSniffer:
@@ -140,6 +147,11 @@ class PacketSniffer:
         Returns:
             List of captured packet info
         """
+        if not SCAPY_AVAILABLE:
+            if isinstance(SCAPY_IMPORT_ERROR, ImportError):
+                raise RuntimeError("Scapy is not installed. Install it with: pip install scapy")
+            raise RuntimeError(f"Scapy could not initialize packet capture: {SCAPY_IMPORT_ERROR}")
+
         logger.info("="*70)
         logger.info("STARTING PACKET CAPTURE")
         logger.info("="*70)

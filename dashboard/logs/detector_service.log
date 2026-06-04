@@ -1,0 +1,449 @@
+[32mINFO[0m | 2026-06-02 20:25:21 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-02 20:25:22 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-02 20:27:33 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:38:15 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:38:15 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:38:43 | DetectorService | Loading ML models...
+[32mINFO[0m | 2026-06-04 11:38:46 | DetectorService | ✓ ML models loaded successfully
+[32mINFO[0m | 2026-06-04 11:38:46 | DetectorService | ======================================================================
+[32mINFO[0m | 2026-06-04 11:38:46 | DetectorService | STARTING DETECTOR SERVICE
+[32mINFO[0m | 2026-06-04 11:38:46 | DetectorService | ======================================================================
+
+[32mINFO[0m | 2026-06-04 11:38:46 | DetectorService | Detection loop started
+[32mINFO[0m | 2026-06-04 11:38:46 | DetectorService | ✓ Detector service started
+[31mERROR[0m | 2026-06-04 11:38:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:38:59 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:00 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:01 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:02 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:03 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:04 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:05 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:06 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:07 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:08 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:09 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:10 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:11 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:12 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:13 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:14 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:15 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:16 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:17 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:17 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:18 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:19 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:20 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:21 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:22 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:24 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:26 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:27 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:28 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:29 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:30 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:31 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:32 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:33 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:34 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:35 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:36 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:37 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:38 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:39 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:40 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:41 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:42 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:43 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:44 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:45 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[32mINFO[0m | 2026-06-04 11:39:47 | DetectorService | Detection resumed
+[31mERROR[0m | 2026-06-04 11:39:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:39:59 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:00 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:01 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:02 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:03 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:04 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:05 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:06 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:07 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:08 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:09 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:10 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:11 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:12 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:13 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:14 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:15 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:16 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:17 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:18 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:19 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:18 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:19 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:20 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:21 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:22 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:24 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:26 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:27 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:28 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:29 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:30 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:31 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:32 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:33 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:34 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:35 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:36 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:37 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:38 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:39 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:40 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:41 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:42 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:43 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:44 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:45 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:40:59 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:00 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:01 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:02 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:03 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:04 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:05 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:06 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:07 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:08 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:09 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:10 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:11 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:12 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:13 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:14 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:15 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[32mINFO[0m | 2026-06-04 11:41:16 | DetectorService | Detection paused
+[32mINFO[0m | 2026-06-04 11:41:19 | DetectorService | Detection paused
+[32mINFO[0m | 2026-06-04 11:41:22 | DetectorService | Detection resumed
+[31mERROR[0m | 2026-06-04 11:41:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:24 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:26 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:27 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:28 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:29 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:30 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:31 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:32 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:33 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:34 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:35 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:36 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:37 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:38 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:39 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:40 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:41 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:42 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:43 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:44 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:45 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:41:59 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:00 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:01 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:02 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:03 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:04 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:05 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:06 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:07 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:08 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:09 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:10 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:11 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:12 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:13 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:14 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:15 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:16 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:17 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:18 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:19 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:20 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:21 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:21 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:22 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:24 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:26 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:27 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:28 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:29 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:30 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:31 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:32 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:33 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:34 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:35 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:36 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:37 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:38 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:39 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:40 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:41 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:42 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:43 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:44 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:45 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:42:59 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:00 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:01 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:02 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:03 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:04 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:05 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:06 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:07 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:08 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:09 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:10 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:11 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:12 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:13 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:14 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:15 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:16 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:17 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:18 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:19 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:20 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:21 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:22 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:24 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:26 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:27 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:28 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:29 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:30 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:31 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:32 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:33 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:34 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:35 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:36 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:37 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:38 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:39 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:40 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:41 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:42 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:43 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:44 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:45 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:43:59 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:00 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:01 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:02 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:03 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:04 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:05 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:06 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:07 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:08 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:09 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:10 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:11 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:12 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:13 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:14 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:15 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:16 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:17 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:18 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:19 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:20 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:21 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:22 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:23 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:24 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:25 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:26 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:27 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:28 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:29 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:30 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:31 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:32 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:33 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:34 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:35 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:36 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:37 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:38 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:39 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:40 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:41 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:42 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:43 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:44 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:45 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:46 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:47 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:48 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:49 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:50 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:51 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:52 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:53 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:54 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:55 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:56 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:57 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[31mERROR[0m | 2026-06-04 11:44:58 | DetectorService | Error in detection loop: [Errno 1] Operation not permitted
+[32mINFO[0m | 2026-06-04 11:44:59 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:45:20 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:45:55 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:47:38 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:48:27 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:49:14 | DetectorService | Loading ML models...
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | ✓ ML models loaded successfully
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | ======================================================================
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | STARTING DETECTOR SERVICE
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | ======================================================================
+
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | Detection loop started
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | ✓ Detector service started
+[31mERROR[0m | 2026-06-04 11:49:15 | DetectorService | Packet capture permission denied. Start the dashboard with sudo/root or grant packet-capture capabilities to the Python interpreter.
+[32mINFO[0m | 2026-06-04 11:49:15 | DetectorService | Detection loop stopped
+[32mINFO[0m | 2026-06-04 11:55:13 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:55:14 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:55:15 | DetectorService | Loading ML models...
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | ✓ ML models loaded successfully
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | ======================================================================
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | STARTING DETECTOR SERVICE
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | ======================================================================
+
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | Detection loop started
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | ✓ Detector service started
+[31mERROR[0m | 2026-06-04 11:55:16 | DetectorService | Packet capture permission denied. Start the dashboard with sudo/root or grant packet-capture capabilities to the Python interpreter.
+[32mINFO[0m | 2026-06-04 11:55:16 | DetectorService | Detection loop stopped
+[32mINFO[0m | 2026-06-04 11:57:45 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:57:46 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 11:57:53 | DetectorService | Loading ML models...
+[32mINFO[0m | 2026-06-04 11:57:54 | DetectorService | ✓ ML models loaded successfully
+[32mINFO[0m | 2026-06-04 11:57:54 | DetectorService | ======================================================================
+[32mINFO[0m | 2026-06-04 11:57:54 | DetectorService | STARTING DETECTOR SERVICE
+[32mINFO[0m | 2026-06-04 11:57:54 | DetectorService | ======================================================================
+
+[32mINFO[0m | 2026-06-04 11:57:54 | DetectorService | Detection loop started
+[32mINFO[0m | 2026-06-04 11:57:54 | DetectorService | ✓ Detector service started
+[32mINFO[0m | 2026-06-04 12:03:41 | DetectorService | Stopping detector service...
+[32mINFO[0m | 2026-06-04 12:03:42 | DetectorService | Detection loop stopped
+[32mINFO[0m | 2026-06-04 12:03:42 | DetectorService | ✓ Detector service stopped
+[32mINFO[0m | 2026-06-04 12:24:25 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 12:24:27 | DetectorService | Detector service initialized
+[32mINFO[0m | 2026-06-04 12:24:43 | DetectorService | Loading ML models...
+[32mINFO[0m | 2026-06-04 12:24:44 | DetectorService | ✓ ML models loaded successfully
+[32mINFO[0m | 2026-06-04 12:24:44 | DetectorService | ======================================================================
+[32mINFO[0m | 2026-06-04 12:24:44 | DetectorService | STARTING DETECTOR SERVICE
+[32mINFO[0m | 2026-06-04 12:24:44 | DetectorService | ======================================================================
+
+[32mINFO[0m | 2026-06-04 12:24:44 | DetectorService | Detection loop started
+[32mINFO[0m | 2026-06-04 12:24:44 | DetectorService | ✓ Detector service started

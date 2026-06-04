@@ -109,9 +109,13 @@
 <span class="text-xs font-mono text-slate-600 dark:text-slate-400">{{ packet.dst_ip }}</span>
 </div>
 <div class="text-xs text-slate-500 dark:text-slate-400">{{ packet.protocol }}:{{ packet.dst_port or 'N/A' }}</div>
-<div class="text-xs text-slate-500 dark:text-slate-400">{{ packet.protocol }}</div>
+<div class="text-xs text-slate-500 dark:text-slate-400">{{ packet.size_label or packet.size ~ ' B' }}</div>
 <div class="px-2 py-1 rounded text-xs font-medium bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">{{ packet.verdict }}</div>
 <div class="text-xs text-slate-400 dark:text-slate-500">Just now</div>
+</div>
+{% else %}
+<div class="p-4 rounded-lg bg-slate-50 dark:bg-surface-dark/50 border border-slate-200 dark:border-border-dark text-sm text-slate-500 dark:text-slate-400">
+No live packets captured yet.
 </div>
 {% endfor %}
 </div>

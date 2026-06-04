@@ -145,15 +145,32 @@ End-to-end testing and documentation
 
 ```bash
 cd rt-idps
-pip install -r requirements.txt
+python3 -m pip install --user -r requirements.txt
 ```
 
 ### 2. Verify Installation
 
 ```bash
-python -c "from utils.config import BASE_DIR; print(f'Project root: {BASE_DIR}')"
-python -c "from utils.logger import system_logger; system_logger.info('Logger test successful')"
+python3 -c "from utils.config import BASE_DIR; print(f'Project root: {BASE_DIR}')"
+python3 -c "from utils.logger import system_logger; system_logger.info('Logger test successful')"
 ```
+
+### Run the Dashboard
+
+Start the dashboard normally when you only need the UI:
+
+```bash
+python3 dashboard/app.py
+```
+
+Live packet capture needs elevated network permissions. If `sudo python3 dashboard/app.py`
+cannot find Flask, keep the user's Python packages visible to sudo:
+
+```bash
+sudo env PYTHONPATH=/home/abbas/.local/lib/python3.12/site-packages python3 dashboard/app.py
+```
+
+The dashboard will be available at `http://127.0.0.1:5000`.
 
 ### 3. Configuration
 
