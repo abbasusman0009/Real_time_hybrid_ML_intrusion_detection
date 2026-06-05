@@ -1,9 +1,12 @@
 services:
+  # Web service configuration
   - type: web
     name: rt-idps-dashboard
     env: python
-    pythonVersion: 3.11
     plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
     buildCommand: pip install --no-cache-dir --prefer-binary -r requirements.txt
     startCommand: gunicorn dashboard.app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
     autoDeploy: true
