@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from functools import lru_cache
 
 # Base directory
 BASE_DIR = Path(__file__).parent.parent
@@ -49,22 +50,22 @@ ML_CONFIG = {
 
 # Dashboard Settings
 DASHBOARD_CONFIG = {
-    "host": "127.0.0.1",
-    "port": 5000,
-    "debug": True,
+    "host": os.getenv("FLASK_HOST", "0.0.0.0"),
+    "port": int(os.getenv("FLASK_PORT", 5000)),
+    "debug": os.getenv("FLASK_DEBUG", "False").lower() == "true",
     "threaded": True,
-    "secret_key": "change-this-in-production",  # Change in production!
+    "secret_key": os.getenv("SECRET_KEY", os.urandom(32).hex() if os.getenv("SECRET_KEY") else "change-this-in-production"),
     "session_timeout": 3600,    # Session timeout in seconds
 }
 
-# Security Settings (CHANGE THESE!)
+# Security Settings (Load from environment variables)
 SECURITY_CONFIG = {
-    "admin_username": "admin",
-    "admin_password": "admin123",  # Hash in production!
+    "admin_username": os.getenv("ADMIN_USERNAME", "admin"),
+    "admin_password_hash": os.getenv("ADMIN_PASSWORD_HASH", None),  # Use hashed password
     "max_login_attempts": 5,
     "lockout_duration": 900,     # 15 minutes
     "session_lifetime": 3600,    # Session lifetime in seconds
-    "secret_key": "change-this-in-production",  # Change in production!
+    "secret_key": os.getenv("SECRET_KEY", os.urandom(32).hex() if os.getenv("SECRET_KEY") else "change-this-in-production"),
 }
 
 # Logging Settings
@@ -78,7 +79,7 @@ LOGGING_CONFIG = {
 
 # Real-time Settings
 REALTIME_CONFIG = {
-    "interface": "eth0",         # Network interface to monitor
+    "interface": os.getenv("NETWORK_INTERFACE", "eth0"),  # Network interface to monitor
     "packet_buffer_size": 65536, # Packet buffer size
     "detection_interval": 1.0,   # Detection interval in seconds
     "max_blocked_ips": 1000,     # Maximum blocked IPs

@@ -5,12 +5,14 @@ Flask web interface for the Intrusion Detection System
 
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 from flask_cors import CORS
+from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime, timedelta
 import os
 import sys
 import csv
 import time
 from functools import wraps
+from urllib.parse import urlparse
 
 # Add parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,8 +25,11 @@ app = Flask(__name__)
 app.secret_key = SECURITY_CONFIG['secret_key']
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(seconds=SECURITY_CONFIG['session_lifetime'])
 
-# Enable CORS
-CORS(app)
+# Enable CORS with restrictions
+CORS(app, resources={
+    r"/api/*": {"origins": os.getenv("CORS_ORIGINS", "*").split(",")},
+    r"/dashboard*": {"origins": os.getenv("CORS_ORIGINS", "*").split(",")}
+})
 
 # Setup logger
 logger = setup_logger('Dashboard', log_file='logs/dashboard.log')
@@ -94,6 +99,36 @@ except Exception as exc:
     logger.warning(f"Detector service unavailable during dashboard startup: {exc}")
     detector_service = DetectorServiceUnavailable()
 
+# ==================== Security Headers ====================
+
+@app.before_request
+def set_security_headers():
+    """Add security headers to all responses"""
+    pass
+
+@app.after_request
+def add_security_headers(response):
+    """Add HTTP security headers to prevent common attacks"""
+    # Prevent clickjacking
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    
+    # Prevent MIME type sniffing
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    
+    # Enable XSS protection
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    
+    # Content Security Policy
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'"
+    
+    # Referrer Policy
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    
+    # Permissions Policy
+    response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+    
+    return response
+
 # ==================== Authentication Decorator ====================
 
 def login_required(f):
@@ -128,21 +163,36 @@ def index():
 def login():
     """Admin login page"""
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
 
-        # Validate credentials (simple for now - should use hashing in production)
-        if username == SECURITY_CONFIG['admin_username'] and password == SECURITY_CONFIG['admin_password']:
-            session['logged_in'] = True
-            session['username'] = username
-            session.permanent = True
-            logger.info(f"User {username} logged in successfully")
-            flash('Login successful!', 'success')
-            return redirect(url_for('dashboard'))
-        else:
-            logger.warning(f"Failed login attempt for username: {username}")
+        # Input validation
+        if not username or not password or len(password) < 1:
+            logger.warning(f"Login attempt with invalid input from {request.remote_addr}")
             flash('Invalid credentials. Please try again.', 'error')
             return render_template('login.html', error=True)
+
+        # Get stored password hash from environment
+        stored_password_hash = SECURITY_CONFIG.get('admin_password_hash')
+        
+        # Verify credentials with hashed password
+        if username == SECURITY_CONFIG['admin_username']:
+            # If hash is set, verify against hash; otherwise reject (must set password)
+            if stored_password_hash and check_password_hash(stored_password_hash, password):
+                session['logged_in'] = True
+                session['username'] = username
+                session.permanent = True
+                logger.info(f"User {username} logged in successfully from {request.remote_addr}")
+                flash('Login successful!', 'success')
+                return redirect(url_for('dashboard'))
+            elif not stored_password_hash:
+                logger.error("Admin password hash not configured. Set ADMIN_PASSWORD_HASH environment variable.")
+                flash('System error: authentication not configured. Contact administrator.', 'error')
+                return render_template('login.html', error=True)
+        
+        logger.warning(f"Failed login attempt for username: {username} from {request.remote_addr}")
+        flash('Invalid credentials. Please try again.', 'error')
+        return render_template('login.html', error=True)
 
     return render_template('login.html')
 
