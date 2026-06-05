@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rt-idps"
+version = "1.0.0"
+description = "Real-Time Hybrid ML Intrusion Detection System"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "Flask==2.3.2",
+    "gunicorn==21.2.0",
+    "Flask-CORS==4.0.0",
+    "werkzeug==2.3.6",
+    "colorama==0.4.6",
+    "scipy==1.10.1",
+    "numpy==1.24.3",
+    "pandas==1.5.3",
+    "scikit-learn==1.2.2",
+    "joblib==1.2.0",
+    "matplotlib==3.7.1",
+    "seaborn==0.12.2",
+    "psutil==5.9.5",
+    "requests==2.31.0",
+    "scapy==2.5.0",
+]
